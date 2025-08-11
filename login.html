@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login & Sign Up</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h2 id="form-title">Sign Up</h2>
+    <input type="text" id="username" placeholder="Username" required>
+    
+    <div class="password">
+        <input type="password" id="password" placeholder="Password" required>
+        <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+    </div>
+    
+    <div class="password" id="confirmWrapper">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <span class="toggle-password" onclick="togglePassword('confirmPassword')">👁️</span>
+    </div>
+
+    <button onclick="submitForm()">Sign Up</button>
+    <p class="toggle" onclick="toggleForm()">Already have an account? Login</p>
+    <p id="message"></p>
+</div>
+<script>
+    let isLogin = false;
+    function toggleForm() {
+        isLogin = !isLogin;
+        document.getElementById("form-title").innerText = isLogin ? "Login" : "Sign Up";
+        document.querySelector("button").innerText = isLogin ? "Login" : "Sign Up";
+        document.querySelector(".toggle").innerText = isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login";
+        document.getElementById("confirmWrapper").style.display = isLogin ? "none" : "block";
+        document.getElementById("message").innerText = "";
+    }
+
+    function togglePassword(fieldId) {
+        let field = document.getElementById(fieldId);
+        field.type = field.type === "password" ? "text" : "password";
+    }
+
+    function validatePassword(password) {
+        const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/;
+        return regex.test(password);
+    }
+
+    function submitForm() {
+        let username = document.getElementById("username").value.trim();
+        let password = document.getElementById("password").value.trim();
+        let confirmPassword = document.getElementById("confirmPassword").value.trim();
+        let message = document.getElementById("message");
+
+        if (!username || !password || (!isLogin && !confirmPassword)) {
+            message.innerText = "Please fill in all fields.";
+            message.style.color = "red";
+            return;
+        }
+
+        let users = JSON.parse(localStorage.getItem("users")) || {};
+
+        if (isLogin) {
+            if (users[username] && users[username] === password) {
+                localStorage.setItem("loggedInUser", username);
+                window.location.href = "welcome.html";
+            } else {
+                message.innerText = "Invalid username or password.";
+                message.style.color = "red";
+            }
+        } else {
+            if (!validatePassword(password)) {
+                message.innerText = "Password must have 6+ chars, 1 uppercase, 1 number, 1 special char.";
+                message.style.color = "orange";
+                return;
+            }
+            if (password !== confirmPassword) {
+                message.innerText = "Passwords do not match.";
+                message.style.color = "red";
+                return;
+            }
+            if (users[username]) {
+                message.innerText = "Username already exists.";
+                message.style.color = "red";
+            } else {
+                users[username] = password;
+                localStorage.setItem("users", JSON.stringify(users));
+                message.innerText = "Account created successfully!";
+                message.style.color = "lightgreen";
+            }
+        }
+    }
+</script>
+</body>
+</html>

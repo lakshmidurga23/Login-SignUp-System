@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    button {
+        background: #dc2626;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+    button:hover {
+        background: #b91c1c;
+    }
+</style>
+</head>
+<body>
+
+<h1 id="welcomeMsg">Welcome!</h1>
+<button onclick="logout()">Logout</button>
+
+<script>
+    let user = localStorage.getItem("loggedInUser");
+    if (!user) {
+        window.location.href = "index.html";
+    }
+    document.getElementById("welcomeMsg").innerText = "Welcome, " + user + "!";
+
+    function logout() {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "index.html";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+  body {
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .container {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 10px;
+        width: 320px;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    input {
+        width: 85%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+    }
+    .password {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+    .toggle-password {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #60a5fa;
+    }
+    button {
+        background: #2563eb;
+        color: white;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+    button:hover {
+        background: #1d4ed8;
+    }
+    .toggle {
+        margin-top: 10px;
+        cursor: pointer;
+        color: #60a5fa;
+    }
